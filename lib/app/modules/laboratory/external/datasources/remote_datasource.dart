@@ -31,7 +31,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(list);
       }
       return left(AppFailure('get Laboratories error'));
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -51,7 +51,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(list);
       }
       return left(AppFailure('get Laboratories error'));
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -71,7 +71,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(list);
       }
       return left(AppFailure('get Laboratories error'));
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -91,7 +91,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(list);
       }
       return left(AppFailure('get Laboratories error'));
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -106,7 +106,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('save Laboratories error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('save Laboratories error');
     }
   }
@@ -119,7 +119,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('save Animal error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('save Animal error');
     }
   }
@@ -134,7 +134,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('save Experiment error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('save Experiment error');
     }
   }
@@ -149,7 +149,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('save experimentGroup error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('save experimentGroup error');
     }
   }
@@ -162,7 +162,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('delete Animal error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('delete Animal error');
     }
   }
@@ -175,7 +175,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('delete Experiment error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('delete Experiment error');
     }
   }
@@ -188,7 +188,7 @@ class RemoteDataSource implements IRemoteDataSource {
         return right(true);
       }
       return left(AppFailure('delete ExperimentGroup error'));
-    } on Exception catch (e) {
+    } on Exception {
       throw AppFailure('delete ExperimentGroup error');
     }
   }
@@ -200,9 +200,77 @@ class RemoteDataSource implements IRemoteDataSource {
       if (response.statusCode == 204) {
         return right(true);
       }
-      return left(AppFailure('delete Laboratories error'));
+      return left(AppFailure('Erro ao deletar: ${response.statusCode}'));
     } on Exception catch (e) {
-      throw AppFailure('delete Laboratories error');
+      if (e is AppFailure) return left(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateAnimal(
+      AnimalParams animal, int id) async {
+    try {
+      Response response = await _apiClient.updateAnimal(id, animal.toJson());
+      if (response.statusCode == 200) {
+        return right(true);
+      }
+      return left(
+          AppFailure('Erro ao atualizar animal: ${response.statusCode}'));
+    } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateExperiment(
+      ExperimentParams experiment, int id) async {
+    try {
+      Response response =
+          await _apiClient.updateExperiment(id, experiment.toJson());
+      if (response.statusCode == 200) {
+        return right(true);
+      }
+      return left(
+          AppFailure('Erro ao atualizar experimento: ${response.statusCode}'));
+    } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateExperimentGroup(
+      ExperimentGroupParams experimentGroup, int id) async {
+    try {
+      Response response =
+          await _apiClient.updateExperiment(id, experimentGroup.toJson());
+      if (response.statusCode == 200) {
+        return right(true);
+      }
+      return left(AppFailure(
+          'Erro ao atualizar grupo de experimento: ${response.statusCode}'));
+    } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateLaboratory(
+      LaboratoryParams laboratory, int id) async {
+    try {
+      Response response =
+          await _apiClient.updateExperiment(id, laboratory.toJson());
+      if (response.statusCode == 200) {
+        return right(true);
+      }
+      return left(
+          AppFailure('Erro ao atualizar laboratório: ${response.statusCode}'));
+    } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
+      rethrow;
     }
   }
 }

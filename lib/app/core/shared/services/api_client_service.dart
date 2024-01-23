@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
 import 'package:monexp_frontend/app/core/interfaces/app_failure.dart';
 import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
@@ -12,6 +10,7 @@ class ApiClient {
   }
   final Dio _dio = Dio();
   final SessionService _sessionService;
+  final String baseUrl = const String.fromEnvironment("BASE_URL");
 
   void addInterceptors() {
     _dio.interceptors.add(
@@ -32,225 +31,268 @@ class ApiClient {
   Future<Response> registerUser(Map<String, dynamic> userdata) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/register/',
+        '$baseUrl/api/register/',
         data: userdata,
       );
       return response;
-    } on DioException catch (e) {
-      throw RegisterFailure('');
+    } on DioException {
+      throw RegisterFailure('Erro ao registrar usuário.');
     }
   }
 
   Future<Response> login(Map<String, dynamic> loginData) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/login/',
+        '$baseUrl/api/login/',
         data: loginData,
       );
       return response;
-    } on DioException catch (e) {
-      throw LoginFailure('');
+    } on DioException {
+      throw LoginFailure('Erro ao realizar login.');
     }
   }
 
   Future<Response> logout(String token) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/logout/',
+        '$baseUrl/api/logout/',
         options: Options(
           headers: {'Authorization': token},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao realizar o log out.');
     }
   }
 
   Future<Response> getUser(String token) async {
     try {
       Response response = await _dio.get(
-        'http://127.0.0.1:8000/api/get_user/',
+        '$baseUrl/api/get_user/',
         options: Options(
           headers: {'Authorization': "Token $token"},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao acessar usuário.');
     }
   }
 
   Future<Response> getLaboratories() async {
     try {
       Response response = await _dio.get(
-        'http://127.0.0.1:8000/api/laboratory/',
+        '$baseUrl/api/laboratory/',
         options: Options(
           headers: {'Authorization': ''},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao acessar laboratórios.');
     }
   }
 
   Future<Response> getExperiments(int laboratory) async {
     try {
       Response response = await _dio.get(
-        'http://127.0.0.1:8000/api/experiment/',
+        '$baseUrl/api/experiment/',
         queryParameters: {'laboratory': laboratory},
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao acessar experimentos.');
     }
   }
 
   Future<Response> getExperimentGroups() async {
     try {
       Response response = await _dio.get(
-        'http://127.0.0.1:8000/api/groupExperiment/',
+        '$baseUrl/api/groupExperiment/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao acessar grupo de experimentos.');
     }
   }
 
   Future<Response> getAnimal() async {
     try {
       Response response = await _dio.get(
-        'http://127.0.0.1:8000/api/animal/',
+        '$baseUrl/api/animal/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao acessar animais.');
     }
   }
 
   Future<Response> createLaboratory(String json) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/laboratory/',
+        '$baseUrl/api/laboratory/',
         data: json,
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao criar laboratório.');
     }
   }
 
   Future<Response> deleteLaboratory(int id) async {
     try {
       Response response = await _dio.delete(
-        'http://127.0.0.1:8000/api/laboratory/$id',
+        '$baseUrl/api/laboratory/$id/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao deletar laboratório.');
     }
   }
 
   Future<Response> createExperiment(String json) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/experiment/',
+        '$baseUrl/api/experiment/',
         data: json,
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao deletar experimento.');
     }
   }
 
   Future<Response> deleteExperiment(int id) async {
     try {
       Response response = await _dio.delete(
-        'http://127.0.0.1:8000/api/experiment/$id',
+        '$baseUrl/api/experiment/$id/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao deletar experimento.');
     }
   }
 
   Future<Response> createExperimentGroup(String json) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/group_experiment/',
+        '$baseUrl/api/group_experiment/',
         data: json,
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao criar grupo de experimento.');
     }
   }
 
   Future<Response> deleteExperimentGroup(int id) async {
     try {
       Response response = await _dio.delete(
-        'http://127.0.0.1:8000/api/group_experiment/$id',
+        '$baseUrl/api/group_experiment/$id/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao deletar grupo de experimento.');
     }
   }
 
   Future<Response> createAnimal(String json) async {
     try {
       Response response = await _dio.post(
-        'http://127.0.0.1:8000/api/animal/',
+        '$baseUrl/api/animal/',
         data: json,
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao criar animal.');
     }
   }
 
   Future<Response> deleteAnimal(int id) async {
     try {
       Response response = await _dio.delete(
-        'http://127.0.0.1:8000/api/animal/$id',
+        '$baseUrl/api/animal/$id/',
         options: Options(
           headers: {'Authorization': ""},
         ),
       );
       return response;
-    } on DioException catch (e) {
-      throw AppFailure('');
+    } on DioException {
+      throw AppFailure('Erro ao deletar animal.');
+    }
+  }
+
+  Future<Response> updateLaboratory(int id, String json) async {
+    try {
+      Response response = await _dio.put('$baseUrl/api/laboratory/$id/',
+      data: json,
+          options: Options(headers: {'Authorization': ''}));
+      return response;
+    } on DioException {
+      throw AppFailure('Erro ao atualizar laboratório.');
+    }
+  }
+
+  Future<Response> updateExperiment(int id, String json) async {
+    try {
+      Response response = await _dio.put('$baseUrl/api/experiment/$id/',
+      data: json,
+          options: Options(headers: {'Authorization': ''}));
+      return response;
+    } on DioException {
+      throw AppFailure('Erro ao atualizar experimento.');
+    }
+  }
+
+  Future<Response> updateExperimentGroup(int id, String json) async {
+    try {
+      Response response = await _dio.put('$baseUrl/api/group_experiment/$id/',
+      data: json,
+          options: Options(headers: {'Authorization': ''}));
+      return response;
+    } on DioException {
+      throw AppFailure('Erro ao atualizar grupo de experimento.');
+    }
+  }
+
+  Future<Response> updateAnimal(int id, String json) async {
+    try {
+      Response response = await _dio.put('$baseUrl/api/animal/$id/',
+          data: json, options: Options(headers: {'Authorization': ''}));
+      return response;
+    } on DioException {
+      throw AppFailure('Erro ao atualizar animal.');
     }
   }
 }

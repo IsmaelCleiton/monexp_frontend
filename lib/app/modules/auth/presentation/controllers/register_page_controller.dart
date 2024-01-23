@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/params/register_user_params.dart';
 import 'package:monexp_frontend/app/modules/auth/presentation/stores/register_page_store.dart';
 

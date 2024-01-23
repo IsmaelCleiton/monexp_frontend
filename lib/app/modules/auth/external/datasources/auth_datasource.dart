@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:monexp_frontend/app/core/interfaces/app_failure.dart';
 import 'package:monexp_frontend/app/core/shared/services/api_client_service.dart';
-import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/entities/authentication_entity.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/entities/user_entity.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/failures/login_failure.dart';

@@ -3,29 +3,28 @@ import 'package:monexp_frontend/app/core/interfaces/app_failure.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/params/laboratory_params.dart';
 import 'package:monexp_frontend/app/modules/laboratory/infra/repositories/remote_repository.dart';
 
-abstract class ICreateLaboratoryUsecase {
-  Future<Either<AppFailure, bool>> call(LaboratoryParams laboratory);
+abstract class IUpdateLaboratoryUsecase {
+  Future<Either<AppFailure, bool>> call(
+      int id, LaboratoryParams laboratoryParams);
 }
 
-class CreateLaboratoryUsecase implements ICreateLaboratoryUsecase {
-  CreateLaboratoryUsecase(this._repository);
-
+class UpdateLaboratoryUsecase implements IUpdateLaboratoryUsecase {
+  UpdateLaboratoryUsecase(this._repository);
   final RemoteRepository _repository;
 
   @override
-  Future<Either<AppFailure, bool>> call(LaboratoryParams laboratory) async {
+  Future<Either<AppFailure, bool>> call(
+      int id, LaboratoryParams laboratory) async {
     try {
-      var response = await _repository.createLaboratories(laboratory);
+      var response = await _repository.updateLaboratory(laboratory, id);
       dynamic result;
       response.fold((l) {
         result = l;
       }, (r) {
         result = r;
       });
-      if (response.isRight()) {
-        return right(result);
-      }
-      return left(result);
+      if (response.isLeft()) return Left(result);
+      return right(result);
     } on Exception {
       rethrow;
     }

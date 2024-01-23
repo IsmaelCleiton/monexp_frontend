@@ -17,7 +17,7 @@ class AuthRepository implements IAuthRepository {
   Future<Either<LoginFailure, Authentication>> login(
       LoginUserParams params) async {
     var response = await _authDataSource.login(params);
-    var result;
+    dynamic result;
     response.fold((l) {
       result = l;
     }, (r) {

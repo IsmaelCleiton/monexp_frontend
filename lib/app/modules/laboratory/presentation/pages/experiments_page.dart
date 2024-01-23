@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_triple/flutter_triple.dart';
-import 'package:monexp_frontend/app/modules/laboratory/domain/entities/experiment_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laboratory_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/experiments_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/states/experiment_page_state.dart';
@@ -46,7 +45,7 @@ class _ExperimentsPageState extends State<ExperimentsPage> {
                       title: Text(state.experiments!.elementAt(index).name),
                       subtitle: Text(
                           state.experiments!.elementAt(index).laboratory.name),
-                      leading: Icon(Icons.business_center),
+                      leading: const Icon(Icons.business_center),
                       // trailing: IconButton(
                       //   onPressed: () {},
                       //   icon: Icon(Icons.arrow_drop_down),

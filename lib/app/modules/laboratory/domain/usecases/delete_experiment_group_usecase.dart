@@ -25,7 +25,7 @@ class DeleteExperimentGroupUsecase implements IDeleteExperimentGroupUsecase {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }

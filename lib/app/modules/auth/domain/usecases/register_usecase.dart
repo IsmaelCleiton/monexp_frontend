@@ -11,6 +11,7 @@ class RegisterUsecase implements IRegisterUsecase {
   RegisterUsecase(this._authRepository);
   final AuthRepository _authRepository;
 
+  @override
   Future<Either<RegisterFailure, bool>> call(RegisterUserParams params) async {
     var response = await _authRepository.register(params);
     dynamic result;

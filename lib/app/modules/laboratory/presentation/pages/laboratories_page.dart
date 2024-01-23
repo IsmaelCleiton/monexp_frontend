@@ -21,8 +21,6 @@ class _LaboratoriesPageState extends State<LaboratoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Laboratórios'),
@@ -69,8 +67,27 @@ class _LaboratoriesPageState extends State<LaboratoriesPage> {
                       child: Text('Excluir'),
                     ),
                   ],
-                  onSelected: (value) {
-                    if (value == 'excluir') {}
+                  onSelected: (value) async {
+                    if (value == 'excluir') {
+                      var result = await widget.store
+                          .deleteLaboratory(state.elementAt(index).id);
+                      if (result is String) {
+                        if (!context.mounted) return;
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: const Text('Ocorreu um erro'),
+                                  content: Text(result),
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('OK'))
+                                  ],
+                                ));
+                      }
+                    }
                   },
                 ),
               ),

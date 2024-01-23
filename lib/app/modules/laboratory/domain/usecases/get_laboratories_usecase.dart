@@ -20,11 +20,11 @@ class GetLaboratoriesUsecase implements IGetLaboratoriesUsecase {
       }, (r) {
         result = r;
       });
-      if (response.isRight()) {
-        return right(result);
+      if (response.isLeft()) {
+        return left(result);
       }
-      return left(result);
-    } on Exception catch (e) {
+      return right(result);
+    } on Exception {
       rethrow;
     }
   }

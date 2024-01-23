@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/params/laboratory_params.dart';
-import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laboratory_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_laboratory_dialog/add_laboratory_dialog_ctrl.dart';
 
 class AddLaboratoryDialog extends StatefulWidget {

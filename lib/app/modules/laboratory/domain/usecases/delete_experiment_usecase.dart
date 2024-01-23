@@ -25,7 +25,7 @@ class DeleteExperimentUsecase implements IDeleteExperimentUsecase {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }

@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/auth/infra/repositories/session_repository.dart';
 

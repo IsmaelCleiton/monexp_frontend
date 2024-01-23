@@ -26,4 +26,11 @@ abstract class IRemoteDataSource {
   Future<Either<AppFailure, bool>> deleteExperimentGroup(int id);
   Future<Either<AppFailure, bool>> createAnimal(AnimalParams animal);
   Future<Either<AppFailure, bool>> deleteAnimal(int id);
+  Future<Either<AppFailure, bool>> updateLaboratory(
+      LaboratoryParams laboratory, int id);
+  Future<Either<AppFailure, bool>> updateExperiment(
+      ExperimentParams experiment, int id);
+  Future<Either<AppFailure, bool>> updateExperimentGroup(
+      ExperimentGroupParams experimentGroup, int id);
+  Future<Either<AppFailure, bool>> updateAnimal(AnimalParams animal, int id);
 }

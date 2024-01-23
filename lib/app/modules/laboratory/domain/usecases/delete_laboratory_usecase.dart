@@ -26,6 +26,7 @@ class DeleteLaboratoryUsecase implements IDeleteLaboratoryUsecase {
       }
       return left(result);
     } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
       rethrow;
     }
   }

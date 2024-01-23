@@ -1,7 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:monexp_frontend/app/core/interfaces/app_failure.dart';
-import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/animal_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/group_experiment_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/params/animal_params.dart';
@@ -30,7 +28,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -50,7 +48,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -70,7 +68,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -89,7 +87,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -109,7 +107,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -129,7 +127,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -148,7 +146,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -167,7 +165,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -186,7 +184,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -206,6 +204,7 @@ class RemoteRepository implements IRemoteRepository {
       }
       return left(result);
     } on Exception catch (e) {
+      if (e is AppFailure) return left(e);
       rethrow;
     }
   }
@@ -225,7 +224,7 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
       rethrow;
     }
   }
@@ -245,7 +244,88 @@ class RemoteRepository implements IRemoteRepository {
         return right(result);
       }
       return left(result);
-    } on Exception catch (e) {
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateAnimal(
+      AnimalParams animal, int id) async {
+    try {
+      var response = await _dataSource.updateAnimal(animal, id);
+      dynamic result;
+      response.fold((l) {
+        result = l;
+      }, (r) {
+        result = r;
+      });
+      if (response.isRight()) {
+        return right(result);
+      }
+      return left(result);
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateExperiment(
+      ExperimentParams experiment, int id) async {
+    try {
+      var response = await _dataSource.updateExperiment(experiment, id);
+      dynamic result;
+      response.fold((l) {
+        result = l;
+      }, (r) {
+        result = r;
+      });
+      if (response.isRight()) {
+        return right(result);
+      }
+      return left(result);
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateExperimentGroup(
+      ExperimentGroupParams experimentGroup, int id) async {
+    try {
+      var response =
+          await _dataSource.updateExperimentGroup(experimentGroup, id);
+      dynamic result;
+      response.fold((l) {
+        result = l;
+      }, (r) {
+        result = r;
+      });
+      if (response.isRight()) {
+        return right(result);
+      }
+      return left(result);
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Either<AppFailure, bool>> updateLaboratory(
+      LaboratoryParams laboratory, int id) async {
+    try {
+      var response = await _dataSource.updateLaboratory(laboratory, id);
+      dynamic result;
+      response.fold((l) {
+        result = l;
+      }, (r) {
+        result = r;
+      });
+      if (response.isRight()) {
+        return right(result);
+      }
+      return left(result);
+    } on Exception {
       rethrow;
     }
   }

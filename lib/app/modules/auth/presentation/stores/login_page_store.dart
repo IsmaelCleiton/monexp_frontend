@@ -1,4 +1,3 @@
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/entities/authentication_entity.dart';
@@ -36,8 +35,6 @@ class LoginPageStore extends Store<Session?> {
         Session sessionResult = Session(authentication: auth, user: r);
         session = sessionResult;
         var saveSessionResult = _saveSessionUsecase.call(sessionResult);
-        print(saveSessionResult);
-        print(sessionResult.user.toMap());
         if (!saveSessionResult) {
           setError;
         }
