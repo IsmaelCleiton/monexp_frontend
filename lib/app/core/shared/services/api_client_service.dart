@@ -256,8 +256,7 @@ class ApiClient {
   Future<Response> updateLaboratory(int id, String json) async {
     try {
       Response response = await _dio.put('$baseUrl/api/laboratory/$id/',
-      data: json,
-          options: Options(headers: {'Authorization': ''}));
+          data: json, options: Options(headers: {'Authorization': ''}));
       return response;
     } on DioException {
       throw AppFailure('Erro ao atualizar laboratório.');
@@ -267,8 +266,7 @@ class ApiClient {
   Future<Response> updateExperiment(int id, String json) async {
     try {
       Response response = await _dio.put('$baseUrl/api/experiment/$id/',
-      data: json,
-          options: Options(headers: {'Authorization': ''}));
+          data: json, options: Options(headers: {'Authorization': ''}));
       return response;
     } on DioException {
       throw AppFailure('Erro ao atualizar experimento.');
@@ -278,8 +276,7 @@ class ApiClient {
   Future<Response> updateExperimentGroup(int id, String json) async {
     try {
       Response response = await _dio.put('$baseUrl/api/group_experiment/$id/',
-      data: json,
-          options: Options(headers: {'Authorization': ''}));
+          data: json, options: Options(headers: {'Authorization': ''}));
       return response;
     } on DioException {
       throw AppFailure('Erro ao atualizar grupo de experimento.');

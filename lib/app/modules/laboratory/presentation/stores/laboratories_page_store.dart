@@ -5,15 +5,19 @@ import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laborator
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/create_laboratory_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/delete_laboratory_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/get_laboratories_usecase.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/update_laboratory_usecase.dart';
 
 class LaboratoriesPageStore extends Store<List<Laboratory>> {
   LaboratoriesPageStore(this._getLaboratoriesUsecase,
-      this._createLaboratoryUsecase, this._deleteLaboratoryUsecase)
+      this._createLaboratoryUsecase,
+      this._deleteLaboratoryUsecase,
+      this._updateLaboratoryUsecase)
       : super([]);
 
   final GetLaboratoriesUsecase _getLaboratoriesUsecase;
   final CreateLaboratoryUsecase _createLaboratoryUsecase;
   final DeleteLaboratoryUsecase _deleteLaboratoryUsecase;
+  final UpdateLaboratoryUsecase _updateLaboratoryUsecase;
 
   bool get isSuccess => state.isNotEmpty;
 
@@ -61,6 +65,36 @@ class LaboratoriesPageStore extends Store<List<Laboratory>> {
   Future<dynamic> deleteLaboratory(int laboratoryId) async {
     try {
       final deleteResponse = await _deleteLaboratoryUsecase(laboratoryId);
+      dynamic result;
+      deleteResponse.fold((l) {
+        result = l.message;
+        setLoading(false);
+      }, (r) {});
+      if (result != null) return result;
+
+      final getResponse = await _getLaboratoriesUsecase();
+      getResponse.fold((l) {
+        result = l.message;
+        setLoading(false);
+      }, update);
+
+      if (result != null) return result;
+    } on Exception catch (error) {
+      if (error is AppFailure) {
+        return error.message;
+      }
+      setLoading(false);
+      return error.toString();
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  Future<dynamic> updateLaboratory(
+      LaboratoryParams laboratory, int laboratoryId) async {
+    try {
+      final deleteResponse =
+          await _updateLaboratoryUsecase(laboratoryId, laboratory);
       dynamic result;
       deleteResponse.fold((l) {
         result = l.message;
