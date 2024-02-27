@@ -4,6 +4,7 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laboratory_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/laboratories_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_laboratory_dialog/add_laboratory_dialog.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/update_laboratory_dialog/update_laboratory_dialog.dart';
 
 import '../../../../core/shared/widgets/error_alert.dart';
 
@@ -87,15 +88,13 @@ class _LaboratoriesPageState extends State<LaboratoriesPage> {
                         }
                         break;
                       case 'editar':
-                        var result = await widget.store
-                            .deleteLaboratory(state.elementAt(index).id);
-                        if (result is String) {
-                          if (!context.mounted) return;
-                          showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  ErrorAlert(message: result));
-                        }
+                        if (!context.mounted) return;
+                        showDialog(
+                          context: context,
+                          builder: (context) => UpdateLaboratoryDialog(
+                              laboratory: state.elementAt(index),
+                              onUpdate: widget.store.updateLaboratory),
+                        );
                         break;
                       default:
                     }

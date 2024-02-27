@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laboratory_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/params/laboratory_params.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/update_laboratory_dialog/update_laboratory_dialog_ctrl.dart';
 
 class UpdateLaboratoryDialog extends StatefulWidget {
-  UpdateLaboratoryDialog({super.key, required this.onSave});
-  final void Function(LaboratoryParams) onSave;
+  UpdateLaboratoryDialog(
+      {super.key, required this.onUpdate, required this.laboratory});
+  final Laboratory laboratory;
+  final void Function(
+    LaboratoryParams,
+    int,
+  ) onUpdate;
   final UpdateLaboratoryDialogController controller =
       UpdateLaboratoryDialogController();
   @override
@@ -14,6 +20,7 @@ class UpdateLaboratoryDialog extends StatefulWidget {
 class _UpdateLaboratoryDialogState extends State<UpdateLaboratoryDialog> {
   @override
   Widget build(BuildContext context) {
+    widget.controller.nameController.text = widget.laboratory.name;
     return AlertDialog(
       insetPadding: const EdgeInsets.all(32),
       title: Padding(
@@ -24,7 +31,7 @@ class _UpdateLaboratoryDialogState extends State<UpdateLaboratoryDialog> {
             const Flexible(
               flex: 8,
               child: Text(
-                'Adicione o novo laboratório',
+                'Edite o laboratório',
                 softWrap: true,
                 style: TextStyle(
                   fontSize: 24,
@@ -46,10 +53,11 @@ class _UpdateLaboratoryDialogState extends State<UpdateLaboratoryDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            widget.onSave(widget.controller.generateLaboratory());
+            widget.onUpdate(
+                widget.controller.generateLaboratory(), widget.laboratory.id);
             Navigator.pop(context);
           },
-          child: const Text('Criar'),
+          child: const Text('Salvar'),
         ),
       ],
       content: Padding(

@@ -262,7 +262,7 @@ class RemoteDataSource implements IRemoteDataSource {
       LaboratoryParams laboratory, int id) async {
     try {
       Response response =
-          await _apiClient.updateExperiment(id, laboratory.toJson());
+          await _apiClient.updateLaboratory(id, laboratory.toJson());
       if (response.statusCode == 200) {
         return right(true);
       }

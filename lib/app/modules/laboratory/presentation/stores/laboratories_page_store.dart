@@ -93,10 +93,10 @@ class LaboratoriesPageStore extends Store<List<Laboratory>> {
   Future<dynamic> updateLaboratory(
       LaboratoryParams laboratory, int laboratoryId) async {
     try {
-      final deleteResponse =
+      final updateResponse =
           await _updateLaboratoryUsecase(laboratoryId, laboratory);
       dynamic result;
-      deleteResponse.fold((l) {
+      updateResponse.fold((l) {
         result = l.message;
         setLoading(false);
       }, (r) {});
