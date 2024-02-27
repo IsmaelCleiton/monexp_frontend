@@ -4,6 +4,9 @@ import 'package:flutter_triple/flutter_triple.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/laboratory_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/laboratories_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_laboratory_dialog/add_laboratory_dialog.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/update_laboratory_dialog/update_laboratory_dialog.dart';
+
+import '../../../../core/shared/widgets/error_alert.dart';
 
 class LaboratoriesPage extends StatefulWidget {
   const LaboratoriesPage({super.key, required this.store});
@@ -63,30 +66,37 @@ class _LaboratoriesPageState extends State<LaboratoriesPage> {
                   icon: const Icon(Icons.more_vert),
                   itemBuilder: (context) => [
                     const PopupMenuItem(
+                      value: 'editar',
+                      child: Text('Editar'),
+                    ),
+                    const PopupMenuItem(
                       value: 'excluir',
                       child: Text('Excluir'),
                     ),
                   ],
                   onSelected: (value) async {
-                    if (value == 'excluir') {
-                      var result = await widget.store
-                          .deleteLaboratory(state.elementAt(index).id);
-                      if (result is String) {
+                    switch (value) {
+                      case 'excluir':
+                        var result = await widget.store
+                            .deleteLaboratory(state.elementAt(index).id);
+                        if (result is String) {
+                          if (!context.mounted) return;
+                          showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  ErrorAlert(message: result));
+                        }
+                        break;
+                      case 'editar':
                         if (!context.mounted) return;
                         showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: const Text('Ocorreu um erro'),
-                                  content: Text(result),
-                                  actions: [
-                                    TextButton(
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                        child: const Text('OK'))
-                                  ],
-                                ));
-                      }
+                          context: context,
+                          builder: (context) => UpdateLaboratoryDialog(
+                              laboratory: state.elementAt(index),
+                              onUpdate: widget.store.updateLaboratory),
+                        );
+                        break;
+                      default:
                     }
                   },
                 ),
