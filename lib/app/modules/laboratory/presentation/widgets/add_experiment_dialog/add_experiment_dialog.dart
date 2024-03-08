@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:monexp_frontend/app/modules/laboratory/domain/params/laboratory_params.dart';
-import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_laboratory_dialog/add_laboratory_dialog_ctrl.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/params/experiment_params.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_experiment_dialog/add_experement_dialog_ctrl.dart';
 
-class AddLaboratoryDialog extends StatefulWidget {
-  AddLaboratoryDialog({super.key, required this.onSave});
-  final void Function(LaboratoryParams) onSave;
-  final AddLaboratoryDialogController controller =
-      AddLaboratoryDialogController();
+class AddExperimentDialog extends StatefulWidget {
+  AddExperimentDialog(
+      {super.key, required this.onSave, required int laboratoryId}) {
+    controller = AddExperimentDialogController(laboratoryId: laboratoryId);
+  }
+  final void Function(ExperimentParams) onSave;
+  late final AddExperimentDialogController controller;
   @override
-  State<AddLaboratoryDialog> createState() => _AddLaboratoryDialogState();
+  State<AddExperimentDialog> createState() => _AddExperimentDialogState();
 }
 
-class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
+class _AddExperimentDialogState extends State<AddExperimentDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -24,7 +26,7 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
             const Flexible(
               flex: 8,
               child: Text(
-                'Adicione o novo laboratório',
+                'Adicione o novo Experimento',
                 softWrap: true,
                 style: TextStyle(
                   fontSize: 24,
@@ -46,7 +48,7 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            widget.onSave(widget.controller.generateLaboratory());
+            widget.onSave(widget.controller.generateExperiment());
             Navigator.pop(context);
           },
           child: const Text('Criar'),
@@ -65,6 +67,10 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
                   TextFormField(
                     controller: widget.controller.nameController,
                     decoration: const InputDecoration(labelText: 'Nome'),
+                  ),
+                  TextFormField(
+                    controller: widget.controller.descriptionController,
+                    decoration: const InputDecoration(labelText: 'Descrição'),
                   ),
                 ],
               ),

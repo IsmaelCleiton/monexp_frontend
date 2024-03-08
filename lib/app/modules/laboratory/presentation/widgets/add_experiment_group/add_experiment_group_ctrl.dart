@@ -1,17 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:monexp_frontend/app/modules/laboratory/domain/params/laboratory_params.dart';
-import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_laboratory_dialog/add_laboratory_dialog_ctrl.dart';
 
-class AddLaboratoryDialog extends StatefulWidget {
-  AddLaboratoryDialog({super.key, required this.onSave});
-  final void Function(LaboratoryParams) onSave;
-  final AddLaboratoryDialogController controller =
-      AddLaboratoryDialogController();
+import 'package:flutter/material.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/entities/experiment_entity.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/params/experiment_group_params.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/widgets/add_experiment_group/add_experiment_group.dart';
+
+class AddExperimentGroupDialog extends StatefulWidget {
+  AddExperimentGroupDialog(
+      {super.key, required this.experiment, required this.onSave}) {
+    controller = AddExperimentGroupDialogController(experiment: experiment);
+  }
+
+  final Function(ExperimentGroupParams) onSave;
+  late final AddExperimentGroupDialogController controller;
+  final Experiment experiment;
+
   @override
-  State<AddLaboratoryDialog> createState() => _AddLaboratoryDialogState();
+  State<AddExperimentGroupDialog> createState() =>
+      _AddExperimentGroupDialogState();
 }
 
-class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
+class _AddExperimentGroupDialogState extends State<AddExperimentGroupDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -24,7 +32,7 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
             const Flexible(
               flex: 8,
               child: Text(
-                'Adicione o novo laboratório',
+                'Adicione o novo Grupo de experimento',
                 softWrap: true,
                 style: TextStyle(
                   fontSize: 24,
@@ -46,7 +54,7 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
       actions: [
         TextButton(
           onPressed: () {
-            widget.onSave(widget.controller.generateLaboratory());
+            widget.onSave(widget.controller.generateExperimentGroup());
             Navigator.pop(context);
           },
           child: const Text('Criar'),
@@ -65,6 +73,10 @@ class _AddLaboratoryDialogState extends State<AddLaboratoryDialog> {
                   TextFormField(
                     controller: widget.controller.nameController,
                     decoration: const InputDecoration(labelText: 'Nome'),
+                  ),
+                  TextFormField(
+                    controller: widget.controller.descriptionController,
+                    decoration: const InputDecoration(labelText: 'Descrição'),
                   ),
                 ],
               ),

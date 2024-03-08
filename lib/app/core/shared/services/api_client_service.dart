@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:monexp_frontend/app/core/interfaces/app_failure.dart';
 import 'package:monexp_frontend/app/core/shared/services/session_service.dart';
 import 'package:monexp_frontend/app/modules/auth/domain/failures/login_failure.dart';
@@ -26,6 +27,23 @@ class ApiClient {
         return request.next(options);
       }),
     );
+    if (kDebugMode) {
+      _dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, request) {
+            // ignore: avoid_print
+            print(
+                "${"\nMETHOD: ${options.method}\n".toUpperCase()}DATA: ${options.data}");
+            return request.next(options);
+          },
+          onResponse: (response, handler) {
+            // ignore: avoid_print
+            print("RESPONSE: ${response.data}");
+            return handler.next(response);
+          },
+        ),
+      );
+    }
   }
 
   Future<Response> registerUser(Map<String, dynamic> userdata) async {
@@ -109,10 +127,11 @@ class ApiClient {
     }
   }
 
-  Future<Response> getExperimentGroups() async {
+  Future<Response> getExperimentGroups(int experiment) async {
     try {
       Response response = await _dio.get(
-        '$baseUrl/api/groupExperiment/',
+        '$baseUrl/api/group_experiment/',
+        queryParameters: {'experiment': experiment},
         options: Options(
           headers: {'Authorization': ""},
         ),

@@ -1,36 +1,42 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:monexp_frontend/app/modules/laboratory/domain/entities/animal_entity.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/entities/experiment_entity.dart';
 
 class ExperimentGroup {
   ExperimentGroup({
     required this.id,
     required this.name,
     required this.description,
-    required this.animal,
+      required this.experiment,
+      required this.animalDataFields
   });
 
-  final String id;
+  final int id;
   final String name;
   final String description;
-  final Animal animal;
+  final Experiment experiment;
+  final String? animalDataFields;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
       'name': name,
       'description': description,
-      'animal': animal.toMap(),
+      'experiment': experiment.toMap(),
+      'animal_data_fields': animalDataFields,
     };
   }
 
   factory ExperimentGroup.fromMap(Map<String, dynamic> map) {
     return ExperimentGroup(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       description: map['description'] as String,
-      animal: Animal.fromMap(map['animal'] as Map<String, dynamic>),
+      experiment: Experiment.fromMap(map['experiment'] as Map<String, dynamic>),
+      animalDataFields: map['animal_data_fields'] != null
+          ? map['animal_data_fields'] as String
+          : null,
     );
   }
 

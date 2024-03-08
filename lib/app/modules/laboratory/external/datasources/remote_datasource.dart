@@ -80,7 +80,7 @@ class RemoteDataSource implements IRemoteDataSource {
   Future<Either<AppFailure, List<ExperimentGroup>>> getExperimentsGroups(
       int experiment) async {
     try {
-      Response response = await _apiClient.getExperiments(experiment);
+      Response response = await _apiClient.getExperimentGroups(experiment);
       List<ExperimentGroup> list = [];
       if (response.statusCode == 200) {
         response.data.forEach(
@@ -183,7 +183,7 @@ class RemoteDataSource implements IRemoteDataSource {
   @override
   Future<Either<AppFailure, bool>> deleteExperimentGroup(int id) async {
     try {
-      Response response = await _apiClient.deleteLaboratory(id);
+      Response response = await _apiClient.deleteExperimentGroup(id);
       if (response.statusCode == 204) {
         return right(true);
       }
@@ -245,7 +245,7 @@ class RemoteDataSource implements IRemoteDataSource {
       ExperimentGroupParams experimentGroup, int id) async {
     try {
       Response response =
-          await _apiClient.updateExperiment(id, experimentGroup.toJson());
+          await _apiClient.updateExperimentGroup(id, experimentGroup.toJson());
       if (response.statusCode == 200) {
         return right(true);
       }
