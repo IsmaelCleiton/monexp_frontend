@@ -8,6 +8,7 @@ import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/delete_an
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/delete_experiment_group_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/delete_experiment_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/delete_laboratory_usecase.dart';
+import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/get_experiment_groups_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/get_experiments_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/get_laboratories_usecase.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/usecases/get_session_usecase.dart';
@@ -19,8 +20,10 @@ import 'package:monexp_frontend/app/modules/laboratory/external/datasources/remo
 import 'package:monexp_frontend/app/modules/laboratory/external/datasources/session_datasource.dart';
 import 'package:monexp_frontend/app/modules/laboratory/infra/repositories/remote_repository.dart';
 import 'package:monexp_frontend/app/modules/laboratory/infra/repositories/session_repository.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/pages/experiment_groups_page.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/pages/experiments_page.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/pages/laboratories_page.dart';
+import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/experiment_groups_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/experiments_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/laboratories_page_store.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/main_page_store.dart';
@@ -41,6 +44,7 @@ class LaboratoryModule extends Module {
     i.add(MainPageStore.new);
     i.add(LaboratoriesPageStore.new);
     i.add(ExperimentsPageStore.new);
+    i.add(ExperimentGroupsPageStore.new);
     // Repositories
     i.add(SessionRepository.new);
     i.add(RemoteRepository.new);
@@ -51,6 +55,7 @@ class LaboratoryModule extends Module {
     i.add(GetSessionUsecase.new);
     i.add(GetLaboratoriesUsecase.new);
     i.add(GetExperimentsUsecase.new);
+    i.add(GetExperimentGroupsUsecase.new);
     i.add(CreateLaboratoryUsecase.new);
     i.add(CreateExperimentUsecase.new);
     i.add(CreateExperimentGroupUsecase.new);
@@ -82,5 +87,9 @@ class LaboratoryModule extends Module {
         laboratory: r.args.data,
       ),
     );
+    r.child('/experimentgroups',
+        child: (context) => ExperimentGroupsPage(
+            store: Modular.get<ExperimentGroupsPageStore>(),
+            experiment: r.args.data));
   }
 }
