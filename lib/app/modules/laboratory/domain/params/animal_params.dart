@@ -14,16 +14,16 @@ class AnimalParams {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'identification': identification,
-      'specie': specie,
-      'experimentGroup': experimentGroup,
+      'species': specie,
+      'group': experimentGroup,
     };
   }
 
   factory AnimalParams.fromMap(Map<String, dynamic> map) {
     return AnimalParams(
       identification: map['identification'] as String,
-      specie: map['specie'] as String,
-      experimentGroup: map['experimentGroup'] as int,
+      specie: map['species'] as String,
+      experimentGroup: map['group'] as int,
     );
   }
 

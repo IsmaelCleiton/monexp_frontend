@@ -60,7 +60,7 @@ class RemoteDataSource implements IRemoteDataSource {
   Future<Either<AppFailure, List<Animal>>> getAnimals(
       int experimentGroup) async {
     try {
-      Response response = await _apiClient.getExperiments(experimentGroup);
+      Response response = await _apiClient.getAnimals(experimentGroup);
       List<Animal> list = [];
       if (response.statusCode == 200) {
         response.data.forEach(

@@ -142,7 +142,7 @@ class ApiClient {
     }
   }
 
-  Future<Response> getAnimal() async {
+  Future<Response> getAnimals(int experimentGroups) async {
     try {
       Response response = await _dio.get(
         '$baseUrl/api/animal/',

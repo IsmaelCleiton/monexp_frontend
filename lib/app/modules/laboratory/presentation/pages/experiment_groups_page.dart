@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_triple/flutter_triple.dart';
 import 'package:monexp_frontend/app/modules/laboratory/domain/entities/experiment_entity.dart';
 import 'package:monexp_frontend/app/modules/laboratory/presentation/stores/experiment_groups_page_store.dart';
@@ -61,8 +62,8 @@ class _ExperimentGroupsPageState extends State<ExperimentGroupsPage> {
           itemBuilder: (context, index) {
             return TextButton(
               onPressed: () {
-                //Modular.to.pushNamed('/lab/experiments',
-                //  arguments: state.experimentGroups!.elementAt(index));
+                Modular.to.pushNamed('/lab/animals',
+                    arguments: state.experimentGroups!.elementAt(index));
               },
               child: ListTile(
                 title: Text(state.experimentGroups!.elementAt(index).name),
