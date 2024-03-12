@@ -7,18 +7,18 @@ class Animal {
   Animal({
     required this.id,
     required this.identification,
-    required this.species,
+    required this.specie,
     required this.group,
   });
   final int id;
-  final String species;
+  final String specie;
   final String identification;
   final ExperimentGroup group;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
-      'species': species,
+      'species': specie,
       'identification': identification,
       'group': group.toMap(),
     };
@@ -27,7 +27,7 @@ class Animal {
   factory Animal.fromMap(Map<String, dynamic> map) {
     return Animal(
       id: map['id'] as int,
-      species: map['species'] as String,
+      specie: map['species'] as String,
       identification: map['identification'] as String,
       group: ExperimentGroup.fromMap(map['group'] as Map<String, dynamic>),
     );
